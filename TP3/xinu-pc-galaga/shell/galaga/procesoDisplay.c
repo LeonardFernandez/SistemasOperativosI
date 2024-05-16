@@ -13,7 +13,9 @@ int display(){
         switch(msg){
             case 1: vidas--; break; //Pierde una vida
             case 2: puntaje++; break;//Gana puntaje
-            case 3: vidas=3;puntaje=0; break; //Restaura puntaje y vidas
+            case 3: vidas=3;puntaje=0;
+                sprintf(cadena, "");
+                print_text_on_vga(300, 40, cadena); break; //Restaura puntaje y vidas
             default: break;
         }
     }
