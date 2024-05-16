@@ -1,0 +1,18 @@
+a)En ese caso el proceso pasa al estado de "waiting"
+
+b)El quantum de Xinu es de 2ms y esta definido en kernel.h .
+Teniendo en cuenta que q=2ms=0,0002s=1rafaga entonces 1s/0,0002s=500. Por lo tanto Xinu puede
+asignar aproximadamente 500 rafagas por segundo a un proceso.Esto podemos saberlo dado que sabemos que cada rafaga dura 0,0002s y esa cantidad de tiempo entra 500 veces en un segundo
+
+c)La funcion control permite controlar un dispositivo o driver
+Sus parametros son: 
+descrp(did32) identidicador/nombre del dispositivo
+func(int32) funcion para el control
+arg1 argumento de la funcion
+arg2 argumento de la funcion
+
+d)Se pueden pasar como maximo el tamaño de uint32
+
+e)No terminan si o si, se puede definir en el codigo que cuando muere un proceso padre no se muera su proceso hijo
+
+f)Se encuentran todas las funciones que hacen llamadas al sistema

@@ -1,0 +1,38 @@
+#include <xinu.h>
+void productor (void), consumidor (void);
+int32 n = 0;	/*Global variables are shared by all processes*/
+sid32 hayProducto,mutex;
+/*---------------------------------------------------------------------
+*	main - Example of unsynchronized producer and consumer processes
+*----------------------------------------------------------------------
+*/
+void mainProdCons(void){
+	hayProducto=semCreate(0);	//Semaforo sincronizacion 0 permisos
+	mutex=semCreate(1);			//Semaforo mutex con 1 permiso
+	resume( create(consumidor, 4096, 20, "consu", 0)); 
+	resume( create(productor, 4096, 20, "produ", 0));
+}
+/*---------------------------------------------------------------------
+*	produce - Increment n 2000 times and exit
+*---------------------------------------------------------------------
+*/
+void productor (void){
+	wait(mutex);	//Proteccion recurso compartido
+	int32 i;
+	for(i=1;i<=2000; i++)
+		n++;
+	signal(hayProducto);//Libera un permiso
+	signal(mutex);	//Proteccion recurso compartido
+}
+/*---------------------------------------------------------------------
+*	consume - Print n 2000 times and exit
+*---------------------------------------------------------------------
+*/
+void consumidor (void){
+	wait(hayProducto); //Toma un permiso
+	wait(mutex);	//Proteccion recurso compartido
+	int32 i;
+	for(i=1;i<=2000; i++)
+		printf("The value of n is %d \n", n);
+	signal(mutex);	//Proteccion recurso compartido
+}

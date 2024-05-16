@@ -1,0 +1,12 @@
+#include <xinu.h>
+// Estructura para el mutex
+typedef struct {
+    sid32 sem; // Semáforo binario para controlar el acceso al recurso
+} mutex_t;
+
+// Prototipos de funciones
+void mutex_init(mutex_t *mutex);
+void mutex_lock(mutex_t *mutex);
+void mutex_unlock(mutex_t *mutex);
+
+#endif /* MUTEX_H */
