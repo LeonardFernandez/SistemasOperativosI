@@ -32,7 +32,7 @@ typedef struct {
 
 //unsigned char nueva_imagen [2000*2000*3];
 
-void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, int inicio_fila, int fin_fila, char nueva_imagen) {
+void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, int inicio_fila, int fin_fila, char *nueva_imagen) {
 
     int width = infoh.width;
     int height = infoh.height;
