@@ -33,7 +33,7 @@ typedef struct {
 
 unsigned char nueva_imagen [2000*2000*3];
 
-void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, char *nueva_imagen) 
+char convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, unsigned char *nueva_imagen) 
 {
 
 	int width = infoh.width;
@@ -53,6 +53,7 @@ void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, char *nu
 		}
 		lseek(in_fd, padding, SEEK_CUR); // Skipping padding
 	}
+	return nueva_imagen;
 }
 
 void something_wrong(int fd, const char *m)
@@ -92,10 +93,9 @@ int main()
     pid_t pid = fork();
 
     if(pid==0){
-        convertir(in_fd,out_fd,h,infoh,nueva_imagen);
+        *nueva_imagen=(in_fd,out_fd,h,infoh,nueva_imagen);
+		exit(0);
     }
-
-	convertir(in_fd, out_fd, h, infoh);
 
 	write(out_fd, &h, sizeof(BMPHeader));
 	write(out_fd, &infoh, sizeof(BMPInfoHeader));
