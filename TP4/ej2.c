@@ -69,6 +69,7 @@ void something_wrong(int fd, const char *m)
 }
 
 void main(){
+    int cantHijos=3;
     unsigned char nueva_imagen [2000*2000*3];
     int in_fd = open(BMP_FILE, O_RDONLY);
 	if (in_fd < 0) {
