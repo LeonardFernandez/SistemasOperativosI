@@ -42,7 +42,7 @@ char convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh)
 
 	int padding = (4 - (width * 3) % 4) % 4; // Calculating padding size
 	unsigned char pixel[3];
-
+	//Me posiciono justo despues de la cabecera en ambos archivos
 	lseek(in_fd, sizeof(BMPHeader) + sizeof(BMPInfoHeader), SEEK_CUR);
 	lseek(out_fd, sizeof(BMPHeader) + sizeof(BMPInfoHeader), SEEK_CUR);
 	
@@ -56,6 +56,7 @@ char convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh)
 		}
 		lseek(in_fd, padding, SEEK_CUR); // Skipping padding
 	}
+	//Escribo en el archivo salida
 	write(out_fd, &nueva_imagen[0], width * height*3);
 }
 
@@ -92,14 +93,16 @@ int main()
 	if (out_fd < 0) {
 		something_wrong(in_fd, "error en output");
 	}
-	
+	//Copio la cabecera al archivo de salida
 	write(out_fd, &h, sizeof(BMPHeader));
     write(out_fd, &infoh, sizeof(BMPInfoHeader));
 
     int pid = fork();
     if(pid==0){
+		//Abro la imagen a convertir
 		int in_fd1 = open(BMP_FILE, O_RDONLY);
-	    int out_fd1 = open(GRAYSCALE_FILE, O_WRONLY, 0644);
+		//Abro de nuevo el archivo de salida BMP
+	    int out_fd1 = open(GRAYSCALE_FILE, O_WRONLY, 0644); 
         convertir(in_fd1,out_fd1,h,infoh);
 		if (out_fd1 < 0) {
 		    something_wrong(in_fd1, "error en output");
@@ -112,14 +115,6 @@ int main()
 		wait(NULL);
 		close(in_fd);
 		close(out_fd);
-
-		/*write(out_fd, &h, sizeof(BMPHeader));
-		write(out_fd, &infoh, sizeof(BMPInfoHeader));
-		write(out_fd, &nueva_imagen[0], infoh.width * infoh.height * 3);
-
-		close(in_fd);
-		close(out_fd);
-		printf("Imagen en gris generada. %s\n", GRAYSCALE_FILE);*/
 		exit(0);
 	}
 }
