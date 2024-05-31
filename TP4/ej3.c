@@ -35,7 +35,7 @@ typedef struct {
 typedef struct {
     int thread_id;
     int filaInicio;
-    int filaFinal;
+	int input;
 } ThreadData;
 
 unsigned char nueva_imagen [2000*2000*3];
@@ -43,6 +43,7 @@ int in_fd;
 int out_fd;
 BMPHeader h;
 BMPInfoHeader infoh;
+
 void something_wrong(int fd, const char *m)
 {
 	if (fd > 0)
@@ -50,6 +51,7 @@ void something_wrong(int fd, const char *m)
 	printf("%s\n", m),
 	exit(1);
 }
+
 void *convertir(void *arg) 
 {
 	ThreadData *data = (ThreadData *)arg;
@@ -57,27 +59,27 @@ void *convertir(void *arg)
 	int height = infoh.height;
 	unsigned char gray;
 	int filaIni= data->filaInicio;
-	int filaFinal=data->filaFinal;
 	int padding = (4 - (width * 3) % 4) % 4; // Calculating padding size
 	unsigned char pixel[3];
+	//Me posiciono justo despues de la cabecera en el archivo entrada
+	lseek(data->input, sizeof(BMPHeader) + sizeof(BMPInfoHeader)+(filaIni*width*3), SEEK_CUR);
 
-	for (int y = filaIni; y < filaFinal; y++) {
-		lseek(in_fd, sizeof(BMPHeader) + sizeof(BMPInfoHeader) + y * (width * 3 + padding), SEEK_SET);
+	for (int y = filaIni; y < filaIni+height; y++) {
 		for (int x = 0; x < width; x++) {
-			read(in_fd, pixel, 3);
+			read(data->input, pixel, 3);
 			gray = (unsigned char)(0.3 * pixel[2] + 0.59 * pixel[1] + 0.11 * pixel[0]);
 			nueva_imagen[y*(width*3+padding) + x*3]= gray;
 			nueva_imagen[y*(width*3+padding) + x*3 + 1] = gray;
 			nueva_imagen[y*(width*3+padding) + x*3 + 2] = gray;
 		}
-		//lseek(in_fd, padding, SEEK_CUR); // Skipping padding
+		lseek(data->input, padding, SEEK_CUR); // Skipping padding
 	}
 	pthread_exit(NULL);
 }
 
 void main(){
     pthread_t threads[3];   //tres threads
-    ThreadData data[3];
+    ThreadData data[3];		//Argumentos, datos para los threads
     
     //Inicio Chequeo
     in_fd = open(BMP_FILE, O_RDONLY);
@@ -100,12 +102,21 @@ void main(){
 	//Division de filas para cada thread
 	int height = infoh.height;
 	int rows_per_thread = height / 3;
-	int remaining_rows = height % 3;
+	//Archivos lectura input
+	int inFD0=open(BMP_FILE, O_RDONLY);
+	int inFD1=open(BMP_FILE, O_RDONLY);
+	int inFD2=open(BMP_FILE, O_RDONLY);
+	data[0].input=inFD0;
+	data[1].input=inFD1;
+	data[2].input=inFD2;
 	for(int i=0; i<3;i++){
 		data[i].filaInicio=i*rows_per_thread;
-		data[i].filaFinal=(i+1)*rows_per_thread;
 	}
-	data[2].filaFinal+=remaining_rows;
+
+	//Padre escribe la cabecera
+	write(out_fd, &h, sizeof(BMPHeader));
+	write(out_fd, &infoh, sizeof(BMPInfoHeader));
+	
 
     //Threads se encargan de la conversion
     pthread_create(&threads[0],NULL,convertir,(void *) &data[0]);
@@ -115,8 +126,7 @@ void main(){
     for (int i = 0; i < 3; i++) {
         pthread_join(threads[i], NULL);
     }
-    write(out_fd, &h, sizeof(BMPHeader));
-	write(out_fd, &infoh, sizeof(BMPInfoHeader));
+    //Padre escribe la imagen
 	write(out_fd, &nueva_imagen[0], infoh.width * infoh.height * 3);
 
 }
