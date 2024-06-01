@@ -126,7 +126,7 @@ void main(){
     for (int i = 0; i < 3; i++) {
         pthread_join(threads[i], NULL);
     }
-    //Padre escribe la imagen
+    //Main escribe la imagen
 	write(out_fd, &nueva_imagen[0], infoh.width * infoh.height * 3);
 
 }
