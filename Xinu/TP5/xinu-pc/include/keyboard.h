@@ -1,4 +1,5 @@
 
+#include <kernel.h>
 #define inportb(p)      inb(p)
 #define outportb(p,v)   outb(p,v)
 

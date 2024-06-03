@@ -1,0 +1,5 @@
+Separacion teorica
+Upper half : limitada interacción con el hw (buffer)
+Lower half: limitada interacción con la aplicación (buffer) --> NO DEBE BLOQUEARSE al sincronizar
+read() : aplicación realiza un wait()
+write(): aplicación realiza un wait() (Trick: el semáforo se interpreta como “espacio disponible”) 
