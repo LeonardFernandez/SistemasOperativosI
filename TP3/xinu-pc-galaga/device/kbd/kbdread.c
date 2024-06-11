@@ -13,5 +13,9 @@ devcall	kbdread (
           uint32        count           /* Length of buffer             */
 	)
 {
+	for(int i=0; i<count; i++){
+		//almaceno en buffer
+		buffer[i]=kbdgetc();		
+	}
 	return OK;
 }

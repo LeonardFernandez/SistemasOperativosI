@@ -1,5 +1,5 @@
 #include<xinu.h>
-unsigned char tecla_actual
+unsigned char tecla_actual;
 void controlGalaga(){
     open(KEYBOARD,NULL, NULL);
     while(1){

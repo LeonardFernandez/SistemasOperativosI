@@ -1,7 +1,7 @@
 /* kbdopen.c  -  kbdopen */
 
 #include <xinu.h>
-
+#include<keyboard.h>
 /*------------------------------------------------------------------------
  * kbdopen  -  Open the ps/2 keyboard device
  *------------------------------------------------------------------------
@@ -13,4 +13,7 @@ devcall	kbdopen (
 	 char	*mode			/* Unused for a kbd */
 	)
 {
+	//Al acceder al teclado, proceso toma el semaforoTeclado
+	wait(semaforoTeclado);
+	pidTeclado=getpid();
 }

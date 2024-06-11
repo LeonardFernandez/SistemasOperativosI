@@ -35,7 +35,7 @@ void kbdhandler(void)
 	insertar(&bufferChar,scancode);
 	signal(semaforoBuffer);
 
-	if(scancode == 0x2A) {
+	/*if(scancode == 0x2A) {
 		shift_key = 1;//Shift key is pressed
 	} else if(scancode & 0xAA) {
 		shift_key = 0;//Shift Key is not pressed
@@ -44,6 +44,6 @@ void kbdhandler(void)
 			int shiftaltctrl = 1;//Put anything to see what special keys were pressed
 		} else {  
 		}     
-	}
+	}*/
 }
 
