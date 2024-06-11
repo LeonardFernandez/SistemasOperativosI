@@ -18,3 +18,6 @@ typedef struct buffer
 }buffer_t;
 //Todos pueden ver bufferChar
 extern  buffer_t bufferChar;	//Buffer tamaño 10, guarda 10 caracteres
+extern pid32 pidTeclado; //pidProceso que accede al teclado
+extern sid32 semaforoTeclado; //semaforo acceso teclado, solo un proceso accede teclado
+extern sid32 semaforoBuffer; //Semaforo teclado, getc puede quitar char si hay permisos

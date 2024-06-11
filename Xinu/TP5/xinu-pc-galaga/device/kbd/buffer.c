@@ -1,3 +1,4 @@
+#include<xinu.h>
 #include<keyboard.h>
 
 buffer_t bufferChar;
@@ -35,4 +36,10 @@ char sacarFrente(buffer_t*a){
         a->frente=( (a->frente+1)%a->tamaño );   
     }
     return !vacio;
+}
+
+void imprimir(buffer_t*a){
+    for(int i=0;i<9;i++){
+        printf("%c \n", a->arreglo[i]);
+    }
 }

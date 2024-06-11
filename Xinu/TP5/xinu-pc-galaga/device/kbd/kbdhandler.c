@@ -4,7 +4,6 @@
 
 #include <xinu.h>
 #include <keyboard.h>
-#include "../../include/keyboard.h"
 
 unsigned char tecla_actual;
 unsigned char get_scancode()
