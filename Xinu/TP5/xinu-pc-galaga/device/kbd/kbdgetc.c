@@ -5,7 +5,7 @@ char kbdgetc(){
     char c;
     if(getpid()==pidTeclado){
         wait(semaforoBuffer);
-        c=sacarFrente(bufferChar);
+        c=sacarFrente(&bufferChar);
     }
     return c;
 }

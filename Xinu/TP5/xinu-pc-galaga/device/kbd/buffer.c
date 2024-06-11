@@ -22,24 +22,31 @@ int estaVacio(buffer_t*a){
 
 int insertar(buffer_t* a, char elem){
     //Inserte en posicion fin
-    int lleno=estaLleno(a);
-    if(!lleno){
-        a->arreglo[a->fin]=elem;
-    }
-    return !lleno;
+    //int lleno=estaLleno(a);
+    a->arreglo[a->fin]=elem;
+    a->fin=(a->fin+1)%(a->tamaño);
+    /*a->arreglo[0]='h';
+    a->arreglo[1]='k';
+    a->arreglo[2]='l';*/
+    return 0;
 }
 
-char sacarFrente(buffer_t*a){
+char sacarFrente(buffer_t* a){
     int vacio=estaVacio(a);
+    char c;
     if(!vacio){
+        c=a->arreglo[a->frente];
         a->arreglo[a->frente]=0;
         a->frente=( (a->frente+1)%a->tamaño );   
     }
-    return !vacio;
+    return c;
 }
 
 void imprimir(buffer_t*a){
+    char cadena[30];
     for(int i=0;i<9;i++){
+        //sprintf(cadena, "%c \n",a->arreglo[i]);
         printf("%c \n", a->arreglo[i]);
     }
+    //print_text_on_vga(300, 40, cadena);
 }

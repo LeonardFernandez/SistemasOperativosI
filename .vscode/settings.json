@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "keyboard.h": "c"
+        "keyboard.h": "c",
+        "random": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

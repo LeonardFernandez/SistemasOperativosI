@@ -52,7 +52,7 @@ devcall	kbdinit (
 	//keyboard_restart();
 
 	//Iniciamos buffer
-	iniciarBuffer(bufferChar);
+	iniciarBuffer(&bufferChar);
 	//Creamos semaforo acceso teclado con un permiso
 	semaforoTeclado=semcreate(1);
 	//Creamos semaforo acceso buffer,0 permisos(handler libera permisos)
