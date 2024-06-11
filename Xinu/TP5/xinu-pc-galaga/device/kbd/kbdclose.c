@@ -10,4 +10,6 @@ devcall	kbdclose (
 	  struct dentry	*devptr		/* Entry in device switch table	*/
 	)
 {
+	//Al cerrar teclado el proceso libera semaforoTeclado
+	signal(semaforoTeclado);
 }

@@ -16,4 +16,5 @@ typedef struct buffer
     int tamaño;
     /* data */
 }buffer_t;
+//Todos pueden ver bufferChar
 extern  buffer_t bufferChar;	//Buffer tamaño 10, guarda 10 caracteres

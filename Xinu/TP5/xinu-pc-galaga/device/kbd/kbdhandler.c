@@ -4,6 +4,7 @@
 
 #include <xinu.h>
 #include <keyboard.h>
+#include "../../include/keyboard.h"
 
 unsigned char tecla_actual;
 unsigned char get_scancode()
@@ -24,7 +25,7 @@ void kbdhandler(void)
 	unsigned char scancode; 
 	unsigned int shift_key = 0;
 	int i = 10;
-	insertar(bufferChar,0);
+	//insertar(bufferChar,0);
 	scancode = get_scancode();
 	tecla_actual = scancode;
 	sprintf(t, "kbd: 0x%x     ", scancode);

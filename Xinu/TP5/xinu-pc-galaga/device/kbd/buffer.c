@@ -28,7 +28,7 @@ int insertar(buffer_t* a, char elem){
     return !lleno;
 }
 
-int eliminar(buffer_t*a){
+char sacarFrente(buffer_t*a){
     int vacio=estaVacio(a);
     if(!vacio){
         a->arreglo[a->frente]=0;

@@ -13,4 +13,7 @@ devcall	kbdopen (
 	 char	*mode			/* Unused for a kbd */
 	)
 {
+	//Al acceder al teclado, proceso toma el semaforoTeclado
+	wait(semaforoTeclado);
+	pidTeclado=getpid();
 }
