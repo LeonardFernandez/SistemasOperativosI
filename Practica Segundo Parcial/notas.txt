@@ -1,0 +1,24 @@
+Ejercicio1(linux)
+Invertir foto
+	primeros 15 bytes cabecera
+
+Ejercicio2(xinu)
+utiliza mecanismo send(pidTeclado,mensaje) 
+descarta el buffer y el semaforo del buffer
+en este caso el mensaje es la tecla leida(scancode)
+----------------------------------------------------------------------------
+			Memoria compartida (mmap)
+-Crea segmento mem compartida
+	shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+-Tamaño segmento mem compartida
+	ftruncate(shm_fd,SIZE);
+-Mapea segmento mem compartida
+	ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+-Escribo en mem compartida
+	sprintf(ptr,"%s",mess0);//mess0="algo"
+ 	ptr += strlen(mess0);	//Me muevo en la memoria
+ 	sprintf(ptr,"%s",mess1);
+ 	
+---------------------------------------------------------------------------
+Puedo definir variables,funciones en .h y luego definirlas en un .c 
+--> asi todos pueden ver las variables,funciones
