@@ -23,3 +23,18 @@ en este caso el mensaje es la tecla leida(scancode)
 ---------------------------------------------------------------------------
 Puedo definir variables,funciones en .h y luego definirlas en un .c 
 --> asi todos pueden ver las variables,funciones
+---------------------------------------------------------------------------
+Creacion procesos
+	pidDisplay=create(display,2048,20,"proceso2",0);
+Creacion hilos
+	typedef struct {
+    	int thread_id;
+    	int filaInicio;
+	int input;
+	} ThreadData;
+	pthread_t threads[3];   //tres threads
+    	ThreadData data[3];
+	pthread_create(&threads[0],NULL,convertir,(void *) &data[0]);}
+	for (int i = 0; i < 3; i++) {	//Espera que terminen los threads
+        	pthread_join(threads[i], NULL);
+    	}

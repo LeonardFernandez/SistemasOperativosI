@@ -1,0 +1,34 @@
+Respuestas teoria 2do Parcial SO
+
+Ejercicio 2: 
+En C en Linux existen las funciones shm_open(), ftruncate() y mmap() para crear un segmento de memoria
+compartida que luego se puede compartir con otros procesos para comunicación entre procesos.
+Indique en XINU cuáles serían las funciones en C equivalentes, y si no existen, expliqué cómo se logra ese
+mecanismo de comunicación entre procesos.
+
+Linux → funciones shm_open(), ftruncate() y mmap() ←¿Equivalente en Xinu?→
+
+En xinu para la comunicación entre procesos se puede utilizar las funciones send(pid,mensaje) y receive().
+Estas funciones permiten que de un procesoA podamos enviar información utilizando send() (indicando pidProcesoB) donde otro procesoB la recibe utilizando receive().
+
+Ejercicio 3:
+
+Espacio para los inodos 4MB
+4MBytes=4.000.000Bytes
+Cada inodo ocupa 64 bytes entonces tenemos 4.000.000/64=62.500 inodos
+Sabiendo que existe un inodo por cada archivo y maximo podemos tener 62500 inodos entonces la cantidad maxima de archivo es 62.500archivos
+
+Ejercicio 2(Recu 2023): 
+Es de conocimiento general que los sistemas Windows de empresas y personas sufren ataques de distintas índoles todo el tiempo. Millones de agujeros de seguridad en Windows se han reportado en internet en los últimos 30 años. Si usted desarrolla dos programas en Windows (prog1 y prog2), y dos programas en XINU (prog1 y prog2), responda: ¿en qué sistema es más sencillo realizar un ataque desde prog1 a prog2?.
+
+Es mas facil realizar un ataque en el sistema Xinu ya que no utiliza memoria compartida, lo cual añade seguridad al hacer que los programas corran aislados, como si estuvieran ejecutandose solo ellos(los procesos).
+
+Ejercicio 3: 
+Sean las siguientes estructuras de dos sistemas de archivos: FAT y un FS UNIX.
+- Suponga que el i-nodo de un archivo deseado ya está en RAM en el UNIX FS. 
+- Suponga que la FAT está en RAM. 
+- Suponga que en ambos sistemas el tamaño máximo para un archivo son iguales, y los bloques de datos son del mismo tamaño. Si sólo se desea conocer los números de bloques en el disco que corresponden a los datos del archivo deseado (no su contenido), ¿en cuál de los dos sistemas de archivos sería más veloz obtener todos los números de bloques de datos que pertenecen al archivo?. Justifique
+
+Acceso directo a los números de bloques: El i-nodo proporciona acceso directo a los números de bloques de datos para los primeros bloques del archivo, lo que es más rápido que seguir una cadena de clusters en la tabla FAT.
+Debido al acceso directo al i-nodo y la eficiencia de la estructura de datos del i-nodo, el sistema de archivos UNIX sería más rápido para obtener los números de bloques de datos del archivo deseado en comparación con el sistema de archivos FAT, especialmente para archivos grandes.
+
