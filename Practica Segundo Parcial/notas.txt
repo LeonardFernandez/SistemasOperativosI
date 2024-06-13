@@ -9,10 +9,11 @@ en este caso el mensaje es la tecla leida(scancode)
 ----------------------------------------------------------------------------
 			Memoria compartida (mmap)
 -Crea segmento mem compartida
-	shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+	int shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
 -Tamaño segmento mem compartida
 	ftruncate(shm_fd,SIZE);
 -Mapea segmento mem compartida
+	void *ptr;
 	ptr = mmap(0,SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 -Escribo en mem compartida
 	sprintf(ptr,"%s",mess0);//mess0="algo"
