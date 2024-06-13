@@ -10,7 +10,7 @@
 void main(){
     char SHM_NAME[] = "pgm_invert";
     unsigned char *mapeoImagen;
-
+    //Abro archivo imagen
     int in_fd = open("cat.pgm", O_RDONLY);
     if(in_fd<0){
         printf("Error open");
@@ -25,7 +25,7 @@ void main(){
     int shmPadre = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666);
     ftruncate(shmPadre,tamanioBytes);
     mapeoImagen = mmap(0,tamanioBytes, PROT_READ | PROT_WRITE, MAP_SHARED, shmPadre, 0);
-    //Abro archivo imagen
+    
     
     //Leo imagen y la pongo en memoria compartida
     read(in_fd,mapeoImagen,tamanioBytes);
